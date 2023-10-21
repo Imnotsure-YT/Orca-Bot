@@ -14,22 +14,22 @@ client = discord.Client(intents=intents)
 
 bot = commands.Bot()
 
-# "hi" command 
-# @bot.slash_command(name="hi", description="Let the bot greet you!")
-# @option(
-#     "name",
-#     description="Enter a name",
-#     required=False,
-#     default=''
-# )
-# async def hi(
-#         ctx: discord.ApplicationContext,
-#         name: str
-# ):
-#     if name == '':
-#         await ctx.respond('uwu hi i am an orca! (and a bot, but mostly an orca)')
-#     else:
-#         await ctx.respond(f'uwu hi {name} i am an orca! (and a bot, but mostly an orca)')
+"hi" command 
+@bot.slash_command(name="hi", description="Let the bot greet you!")
+@option(
+    "name",
+    description="Enter a name",
+    required=False,
+    default=''
+)
+async def hi(
+        ctx: discord.ApplicationContext,
+        name: str
+):
+    if name == '':
+        await ctx.respond('uwu hi i am an orca! (and a bot, but mostly an orca)')
+    else:
+        await ctx.respond(f'uwu hi {name} i am an orca! (and a bot, but mostly an orca)')
 
 # bark command 
 @bot.slash_command(name="bark", description="Make the bot bark!")
@@ -65,23 +65,8 @@ async def askgpt(
     await ctx.respond(f'Question: {inquiry}'+'\n'*2 + 'Response: '+response["choices"][0]["message"]["content"])
     # await ctx.respond('Sorry, askgpt is currently under maintenance. Maybe try Clyde or the ChatGPT Website?')
 
-#"fun" command group
+#"fun" command group - WIP
 secret = bot.create_group("secret", "Secret commands requested by special people! (Password protected)")
-
-@secret.command(name='dylan', description='Password protected command.')
-@option(
-    "password",
-    descrption="Enter a password.",
-    required=True,
-)
-async def dylan(
-    ctx: discord.ApplicationContext,
-    password: str
-):
-    if password == "master orka":
-        await ctx.respond('you cannot escape the monika simps')
-    else:
-        await ctx.respond('Password incorrect.')
 
 @bot.slash_command(name="orca", description="Show a random gif of an orca!")
 async def flip(
