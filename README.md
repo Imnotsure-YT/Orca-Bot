@@ -36,11 +36,11 @@ For MacOS, I followed the following instructions:
 1. Run `nano ~/.zshrc` on your system terminal. This may differ depending on your Mac version/hardware. Other Mac systems may use `nano ~/.bashrc`. 
 2. Edit the zshrc file in the nano editor:
 
-`export discord_api = [Your bot token]`
+   `export discord_api = [Your bot token]`
 
-`export openai_api = [Your openai token]` 
+   `export openai_api = [Your openai token]` 
 
-Replace [Your openai token] and [Your variable name] appropriately. Remember to use the line break character `\` if your variable name is too long. Otherwise, you will get a 'bad assignment' error.
+   Replace [Your openai token] and [Your variable name] appropriately. Remember to use the line break character `\` if your variable name is too long. Otherwise, you will get a 'bad assignment'       error.
 
 3. exit by pressing `CTRL + X` and `ENTER`.
    
