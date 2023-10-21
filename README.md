@@ -41,7 +41,9 @@ For MacOS, I followed the following instructions:
 `export openai_api = [Your openai token]` 
 
 Replace [Your openai token] and [Your variable name] appropriately. Remember to use the line break character `\` if your variable name is too long. Otherwise, you will get a 'bad assignment' error.
+
 3. exit by pressing `CTRL + X` and `ENTER`.
+   
 4. Run `source ~/.zshrc` on your system terminal. This saves ~/.zshrc. If it works, the terminal will enter a new line. 
 
 In the code, change VARIABLE_NAME in `discord_api = os.environ.get('VARIABLE_NAME')` to the variable that you set in ~/.zshrc. 
