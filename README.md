@@ -5,7 +5,7 @@ This file describes and shows how to set up certain features.
 
 -------Packages-------
 
-run `pip install py-cord`, `pip install openai`, and `pip install discord` on your terminal. 
+run `pip install py-cord`, `pip install openai`, and `pip install discord` on your Python terminal. 
 
 -------Hosting-------
 
