@@ -33,7 +33,7 @@ For personal use, you could just hardcode the API key, or you can store it in yo
 
 For MacOS, I followed the following instructions:
 
-1. Run `nano ~/.zshrc` on your system terminal. This may differ depending on your Mac version/hardware. Other systems may use `nano ~/.bashrc`. 
+1. Run `nano ~/.zshrc` on your system terminal. This may differ depending on your Mac version/hardware. Other Mac systems may use `nano ~/.bashrc`. 
 2. Edit the zshrc file in the nano editor:
 
 `export discord_api = [Your bot token]`
