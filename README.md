@@ -29,7 +29,7 @@ However, if you do not use it extensively, it costs you negligibly (< 1 cent USD
 
 For the uploaded code, my API keys are stored in my Mac's system config file, specifically zshrc. 
 
-For personal use, you could just hardcode the code, or you can store it in your system environment, depending on what OS you use. 
+For personal use, you could just hardcode the API key, or you can store it in your system environment, depending on what OS you use. 
 
 For MacOS, I followed the following instructions:
 
