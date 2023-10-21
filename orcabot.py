@@ -84,7 +84,7 @@ async def flip(
             lines = rFile.readlines()
             orcaGifs.extend([line.rstrip() for line in lines])
 
-    # Generate a random index to select a line from flipGifs
+    # Generate a random index to select a line from orcaGifs
     rand = random.randint(0, len(orcaGifs) - 1)
     await ctx.respond(orcaGifs[rand])
 
