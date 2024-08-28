@@ -148,14 +148,18 @@ async def sgvocab(ctx:discord.ApplicationContext, dataset: str, rounds: int, tim
 
     async def sendHint(answer, hintCnt):
         hint = re.sub(r'\S', '_', answer)
+        mnemonic = word[2]
         for i in range(hintCnt):
             await asyncio.sleep(10)
-            if hintCnt % 2 == 1:
-                hint = await generateHint(answer, hint)
             hintEmbed = discord.Embed(
                 title="**Hint**",
                 description=f"`{hint}`"
             )
+            if i % 2 == 0:
+                hint = await generateHint(answer, hint)
+                hintEmbed.description=f"`{hint}`"
+            else:
+                hintEmbed.description=f"`{mnemonic}`"
             if not sglistening: break
             await ctx.send(embed=hintEmbed)
     
