@@ -23,6 +23,7 @@ pruned = []
 sglistening = False
 word = []
 hasRound = False
+forceStop = False
 
 # "hi" command 
 # @bot.slash_command(name="hi", description="Let the bot greet you!")
@@ -75,6 +76,8 @@ hasRound = False
 async def cancelg(ctx: discord.ApplicationContext):
     global hasRound
     hasRound = False
+    global forceStop
+    forceStop = True
 
 @bot.slash_command(name="sg", description="guessing game for vocab & other things.")
 @option(
@@ -143,7 +146,8 @@ async def sgvocab(ctx:discord.ApplicationContext, dataset: str, rounds: int, tim
         hint = re.sub(r'\S', '_', answer)
         for i in range(hintCnt):
             await asyncio.sleep(10)
-            hint = await generateHint(answer, hint)
+            if hintCnt % 2 == 1:
+                hint = await generateHint(answer, hint)
             hintEmbed = discord.Embed(
                 title="**Hint**",
                 description=f"`{hint}`"
@@ -182,9 +186,16 @@ async def sgvocab(ctx:discord.ApplicationContext, dataset: str, rounds: int, tim
     
     for i in range(rounds):
         global sglistening
+        global forceStop
+
+        if forceStop: 
+            forceStop = False
+            return
+
         word = random.choice(vocab)
         term = word[0]
         definition = word[1]
+        mnemonic = word[2]
 
         print(f"{term}: {definition}\n")
 
