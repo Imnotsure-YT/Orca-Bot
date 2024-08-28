@@ -278,7 +278,7 @@ async def askgpt(ctx: discord.ApplicationContext, inquiry: str):
             banned = False
 
     # banned if current inquiry contains the sgvocab word
-    if len(word[0]) != 0 and word[0].lower() in inquiry.lower():
+    if len(word[0]) != 0 and word[0].lower() in inquiry.lower() and sglistening:
         banned = True
 
     # I'm sorry, but this is a bit too funny to pass up.
