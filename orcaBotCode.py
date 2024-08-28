@@ -72,12 +72,13 @@ forceStop = False
 
 
 # sg group
-@bot.slash_command(name="cancelg", description="cancel the round")
+@bot.slash_command(name="cancelg", description="cancel the current session")
 async def cancelg(ctx: discord.ApplicationContext):
     global hasRound
     hasRound = False
     global forceStop
     forceStop = True
+    ctx.respond("Session stopped. Wait for the current round to conclude.")
 
 @bot.slash_command(name="sg", description="guessing game for vocab & other things.")
 @option(
@@ -130,6 +131,7 @@ async def sgvocab(ctx:discord.ApplicationContext, dataset: str, rounds: int, tim
     global sglistening
     global word
     global hasRound
+    global forceStop
     
     # load the dataset first
     vocab = []
@@ -186,10 +188,15 @@ async def sgvocab(ctx:discord.ApplicationContext, dataset: str, rounds: int, tim
     
     for i in range(rounds):
         global sglistening
-        global forceStop
 
         if forceStop: 
             forceStop = False
+            stopEmbed = discord.Embed(
+                title="Session terminated.",
+                description=f"L"
+            )
+            ctx.send(embed=stopEmbed)
+            print("test")
             return
 
         word = random.choice(vocab)
