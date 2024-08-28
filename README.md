@@ -19,6 +19,18 @@ The Orca command is something specific to the theme of the bot. When the command
 in order to use the command, the file `'orcaCommand.in'` must be in the same folder as `orcaBotCode.py`. 
 You may add more links/other media to the `'orcaCommand.in'` file, separating each with a new line. 
 
+-------'sg' Command-------
+
+The sg command is used to start an SAT Vocab guessing game (inspired by [RinBot's](https://www.rinbot.moe) command with the same name. It currently supports session customization through 
+- # of rounds
+- time
+- genre (vocab only, more coming soon)
+- dataset (pruned only - 1k handpicked words from Barron's 3500 SAT words)
+- # of hints (currently dysfunctional)
+
+To start a round, simply run the /sg function. In order to set up the bot locally, the source text file `pruned.txt` must be downloaded and moved to the working directory of the bot.
+`/cancelg` is a prototype QOL function to stop a round; however, this isn't very user-friendly and the bot doesn't produce anything when this command is run. We appreciate any contributions on this feature.
+
 -------ChatGPT Integration-------
 
 Orca Bot was also built with a ChatGPT 3.5 Turbo API integration. This is used for the `/askgpt` command on discord. 
