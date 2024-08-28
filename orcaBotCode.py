@@ -75,9 +75,11 @@ forceStop = False
 @bot.slash_command(name="cancelg", description="cancel the current session")
 async def cancelg(ctx: discord.ApplicationContext):
     global hasRound
-    hasRound = False
     global forceStop
+    global sglistening
     forceStop = True
+    hasRound = False
+    sglistening = False
     ctx.respond("Session stopped. Wait for the current round to conclude.")
 
 @bot.slash_command(name="sg", description="guessing game for vocab & other things.")
@@ -260,13 +262,22 @@ async def bark(ctx: discord.ApplicationContext, length: int):
 )
 
 async def askgpt(ctx: discord.ApplicationContext, inquiry: str):
+    global word
     banned_ppl = [815017361215979541]
     banned = False
-    # # toggle the banned filter (banned_ppl currently contains lever)
-    # try: 
-    #     banned = True if banned_ppl.index(ctx.author.id) != -1 else False
-    # except ValueError:
-    #     banned = False
+    # toggle the banned filter (banned_ppl currently contains lever)
+    checkBan = False
+    if checkBan:
+        try: 
+            banned = True if banned_ppl.index(ctx.author.id) != -1 else False
+        except ValueError:
+            banned = False
+
+    # banned if current inquiry contains the sgvocab word
+    if len(word[0]) != 0 and word[0].lower() in inquiry.lower():
+        banned = True
+
+    # I'm sorry, but this is a bit too funny to pass up.
     if banned:
         await ctx.respond("https://tenor.com/view/alya-sometimes-hides-her-feelings-in-russian-roshidere-qazira-alisa-mikhailovna-kujou-alya-san-gif-14476115292297719268")
     else:
