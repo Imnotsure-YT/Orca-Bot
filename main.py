@@ -13,6 +13,7 @@ discord_api = os.environ.get('discord_api')
 openai.api_key = openai_api
 intents = discord.Intents.default()
 intents.message_content = True
+intents.messages = True
 client = discord.Client(intents=intents)
 
 bot = commands.Bot(intents=intents)
@@ -21,6 +22,7 @@ bot = commands.Bot(intents=intents)
 server_cache = {}
 pruned = []
 sglistening = {}
+rinbotban = {}
 word = {}
 hasRound = False
 forceStop = False
@@ -70,17 +72,39 @@ forceStop = False
 #     if server_cache[message.guild.id] == message.channel.id:
 #         pass
 
+@bot.event
+async def on_message(message):
+    global rinbotban
+    try:
+        if message.author.id == 429656936435286016 and rinbotban[message.guild.id]:
+            await message.delete()
+    except KeyError:
+        pass
+
+
+@bot.slash_command(name="rbban", description="start to ban messages by rinbot")
+@option(
+    "time",
+    description="time in seconds, default is 60",
+    required=False,
+    default=60
+)
+
+async def rbban(ctx:discord.ApplicationContext, time: int):
+    global rinbotban
+    rinbotban[ctx.guild.id] = True
+    await ctx.respond(f"Rinbot now banned for {time} seconds.")
+    await asyncio.sleep(time)
+    rinbotban[ctx.guild.id] = False
 
 # sg group
 @bot.slash_command(name="cancelg", description="cancel the current session")
 async def cancelg(ctx: discord.ApplicationContext):
-    global hasRound
     global forceStop
     global sglistening
     forceStop = True
-    hasRound = False
     sglistening[ctx.guild.id] = False
-    ctx.respond("Session stopped. Wait for the current round to conclude.")
+    await ctx.respond("Session stopped. Wait for the current round to conclude.")
 
 @bot.slash_command(name="sg", description="guessing game for vocab & other things.")
 @option(
@@ -197,13 +221,13 @@ async def sgvocab(ctx:discord.ApplicationContext, dataset: str, rounds: int, tim
 
         if forceStop: 
             print("force stopped")
+            sglistening[ctx.guild.id] = False
             forceStop = False
             stopEmbed = discord.Embed(
                 title="Session terminated.",
                 description=f"L"
             )
-            ctx.send(embed=stopEmbed)
-            print("test")
+            await ctx.send(embed=stopEmbed)
             return
 
         word[ctx.guild.id] = random.choice(vocab)
@@ -225,7 +249,7 @@ async def sgvocab(ctx:discord.ApplicationContext, dataset: str, rounds: int, tim
 
         promptEmbed = discord.Embed(
             title=f"{term}",
-            description="Guess the definition of the word[ctx.guild.id]!"
+            description="Guess the definition of the word!"
         )
 
         await ctx.send(embed=promptEmbed)
@@ -233,11 +257,11 @@ async def sgvocab(ctx:discord.ApplicationContext, dataset: str, rounds: int, tim
         print(f"waiting for {time}")
 
         try: 
-            await asyncio.wait_for(monitor_sglistening[ctx.guild.id](), timeout=time)
+            await asyncio.wait_for(monitor_sglistening(), timeout=time)
         except asyncio.TimeoutError:
             timeout_embed = discord.Embed(
                 title="Round Over",
-                description="No one got the word[ctx.guild.id] correct."
+                description="No one got the word correct."
             )
             timeout_embed.add_field(name=f"**{term}**", value=f"**{definition}**", inline=False)
             await ctx.send(embed=timeout_embed)
