@@ -27,76 +27,6 @@ word = {}
 hasRound = False
 forceStop = False
 
-# "hi" command 
-# @bot.slash_command(name="hi", description="Let the bot greet you!")
-# @option(
-#     "name",
-#     description="Enter a name",
-#     required=False,
-#     default=''
-# )
-# async def hi(
-#         ctx: discord.ApplicationContext,
-#         name: str
-# ):
-#     if name == '':
-#         await ctx.respond('uwu hi i am an orca! (and a bot, but mostly an orca)')
-#     else:
-#         await ctx.respond(f'uwu hi {name} i am an orca! (and a bot, but mostly an orca)')
-
-# # antirinbot WIP
-
-# @bot.slash_command(name="antirinbot", description="Set the channel and activity status of antirinbot")
-# @option(
-#     "channel-id",
-#     description="Channel ID of rinbot activity",
-#     required=True,
-#     default=""
-# )
-
-# async def set(ctx: discord.ApplicationContext, interaction: discord.interactions, channel: str):
-#     found = False
-#     with open ("Code/VSCode/Personal/Orca Bot/server_cache.txt") as rFile:
-#         for line in rFile:
-#             if int(line.split()[0]) == interaction.guild.id:
-#                 found = True
-#             server_cache[int(line.split()[0])] = int(line.split()[1])
-            
-#     if not found:
-#         with open("Code/VSCode/Personal/Orca Bot/server_cache.txt", "a") as rFile:
-#             rFile.write(f"{interaction.guild.id} {channel}\n")
-
-# # listening to channel
-
-# async def on_message(message):
-#     if server_cache[message.guild.id] == message.channel.id:
-#         pass
-
-@bot.event
-async def on_message(message):
-    global rinbotban
-    try:
-        if message.author.id == 429656936435286016 and rinbotban[message.guild.id]:
-            await message.delete()
-    except KeyError:
-        pass
-
-
-@bot.slash_command(name="rbban", description="start to ban messages by rinbot")
-@option(
-    "time",
-    description="time in seconds, default is 60",
-    required=False,
-    default=60
-)
-
-async def rbban(ctx:discord.ApplicationContext, time: int):
-    global rinbotban
-    rinbotban[ctx.guild.id] = True
-    await ctx.respond(f"Rinbot now banned for {time} seconds.")
-    await asyncio.sleep(time)
-    rinbotban[ctx.guild.id] = False
-
 # sg group
 @bot.slash_command(name="cancelg", description="cancel the current session")
 async def cancelg(ctx: discord.ApplicationContext):
@@ -339,7 +269,6 @@ async def askgpt(ctx: discord.ApplicationContext, inquiry: str):
 
     # I'm sorry, but this is a bit too funny to pass up.
     if banned:
-        await ctx.respond("https://tenor.com/view/alya-sometimes-hides-her-feelings-in-russian-roshidere-qazira-alisa-mikhailovna-kujou-alya-san-gif-14476115292297719268")
         await ctx.respond("dont cheat noob")
     else:
         response = openai.ChatCompletion.create(
